@@ -357,7 +357,7 @@ jobs:
       # Optionally, you can create a package like a tarball or zip file
       - name: Create Linux Package (ZIP)
         run: |
-          zip -r blitz3d-ng-linux-${{ github.sha }}-${{ matrix.dist }}.zip _release/bin/*
+          zip -r blitz3d-ng-linux-${{ github.sha }}-${{ matrix.dist }}.zip . -i _release/bin/*
   
       # Optionally, upload the created package as an artifact for debugging purposes
       - name: Upload Linux Package
