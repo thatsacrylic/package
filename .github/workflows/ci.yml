@@ -388,6 +388,7 @@ jobs:
       - help
       - package_windows
       - package_macos
+      - package_linux
       - linux
       - android
       - ovr
@@ -404,6 +405,10 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: windows-package
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: linux-package
 
       - uses: actions/download-artifact@v3
         with:
