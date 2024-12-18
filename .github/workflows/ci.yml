@@ -408,10 +408,6 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: linux-package
-
-      - uses: actions/download-artifact@v3
-        with:
           name: macos-11-package
       - run: TAG=$GITHUB_TAG MACOS=macos11 file=\$file ARCHIVE=\$ARCHIVE envsubst < src/download.macos.sh > blitz3d-ng-$GITHUB_TAG-macos11.sh
 
