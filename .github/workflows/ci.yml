@@ -344,6 +344,43 @@ jobs:
           name: macos-${{ matrix.version }}-package
           path: "*.zip"
 
+  package_linux:
+    name: Build Linux Package
+    runs-on: ubuntu-latest
+    needs:
+      - linux  # Ensure this job runs after the Linux job completes
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      # Download the built binaries from the 'linux' job (assuming it's uploaded as an artifact)
+      - name: Download Linux build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-${{ matrix.dist }}  # Adjust this name if necessary
+          path: _release
+  
+      # Optionally, you can create a package like a tarball or zip file
+      - name: Create Linux Package (ZIP)
+        run: |
+          zip -r blitz3d-ng-linux-${{ github.sha }}-${{ matrix.dist }}.zip _release/bin/*
+  
+      # Optionally, upload the created package as an artifact for debugging purposes
+      - name: Upload Linux Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-package
+          path: blitz3d-ng-linux-${{ github.sha }}-${{ matrix.dist }}.zip
+  
+      # Create a release and upload the package to GitHub releases
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: blitz3d-ng-linux-${{ github.sha }}-${{ matrix.dist }}.zip
+          prerelease: true  # If it's a prerelease or not
+
+
   release:
     name: Build release
     runs-on: ubuntu-latest
