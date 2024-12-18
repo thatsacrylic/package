@@ -369,6 +369,7 @@ jobs:
       # Create a release and upload the package to GitHub releases
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: blitz3d-ng-linux-${{ github.sha }}-${{ matrix.dist }}.zip
           prerelease: true  # If it's a prerelease or not
